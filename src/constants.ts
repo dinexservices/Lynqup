@@ -1,5 +1,5 @@
 
-import { IP, PastEdition, Metric, NavItem } from './types';
+import { IP, PastEdition, Metric, NavItem } from './Types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: 'home' },

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { IPS } from '../constants';
-import { IP } from '../types';
+import {IPS} from "@/constants"
+import { IP } from '@/Types';
 
 const IPs: React.FC = () => {
   const [selectedIP, setSelectedIP] = useState<IP | null>(null);

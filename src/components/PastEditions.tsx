@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { PAST_EDITIONS } from '../constants';
+import { PAST_EDITIONS } from '@/constants';
 
 const PastEditions: React.FC = () => {
   return (

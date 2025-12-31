@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { METRICS } from '../constants';
+
+import { METRICS } from '@/constants';
 
 const Home: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
