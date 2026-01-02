@@ -2,30 +2,20 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { NAV_ITEMS } from '@/constants';
+
+const logo="/logo.png"
 
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home');
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-
-            const sections = NAV_ITEMS.map(item => item.href);
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 100) {
-                        setActiveSection(section);
-                        break;
-                    }
-                }
-            }
+            setIsScrolled(window.scrollY > 50);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -33,7 +23,7 @@ const Navbar: React.FC = () => {
         setMobileMenuOpen(false);
         const element = document.getElementById(id);
         if (element) {
-            const navHeight = 60;
+            const navHeight = 0; // Scroll to top for hero or handle offset if needed
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - navHeight;
 
@@ -45,73 +35,70 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'glass-nav py-3' : 'bg-transparent py-8'
-            }`}>
-            <div className="max-w-[1800px] mx-auto px-8 md:px-12 lg:px-20 flex justify-between items-center">
-                {/* Brand Logo */}
-                <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 group">
-                    <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center group-hover:rotate-12 transition-all duration-500">
-                        <span className="text-black font-black text-xl italic">L</span>
-                    </div>
-                    <span className="text-2xl font-black tracking-tighter uppercase hidden sm:block">Lynqup</span>
-                </button>
+        <>
+            <nav
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled ? 'py-4 glass-nav' : 'py-8 bg-transparent'
+                    }`}
+            >
+                <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between items-center">
+                    {/* Brand Logo */}
+                    <button onClick={() => scrollToSection('home')} className="group flex items-center gap-2">
+                        <div className=" flex items-center justify-center rounded-sm transform group-hover:rotate-12 transition-transform duration-300">
+                            <Image src={logo} alt="Logo" width={150} height={150} />
+                        </div>
+                    </button>
 
-                {/* Desktop Menu */}
-                <div className="hidden lg:flex items-center gap-12">
-                    <div className="flex gap-8">
+                    {/* Desktop Menu */}
+                    <div className="hidden lg:flex items-center gap-12">
+                        {/* Centered Links could go here if design requires, but sticking to right side or spread */}
+                    </div>
+
+                    <div className="hidden lg:flex items-center gap-8">
                         {NAV_ITEMS.map((item) => (
                             <button
                                 key={item.href}
                                 onClick={() => scrollToSection(item.href)}
-                                className={`text-[10px] font-black tracking-[0.2em] uppercase hover:text-white transition-all cursor-pointer relative py-1.5 ${activeSection === item.href ? 'text-white' : 'text-neutral-500'
-                                    }`}
+                                className="text-sm font-medium text-neutral-400 hover:text-white transition-colors capitalize tracking-wide"
                             >
                                 {item.label}
-                                {activeSection === item.href && (
-                                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-white" />
-                                )}
                             </button>
                         ))}
+                     
                     </div>
+
+                    {/* Mobile Menu Toggle */}
                     <button
-                        onClick={() => scrollToSection('contact')}
-                        className="bg-white text-black px-6 py-2.5 rounded-sm text-[9px] font-black uppercase tracking-[0.3em] hover:bg-neutral-200 transition-all"
+                        className="md:hidden w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white z-50 relative"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
-                        Host Lynqup
+                        <div className={`flex flex-col gap-1.5 transition-all ${mobileMenuOpen ? 'rotate-180' : ''}`}>
+                            <span className={`w-5 h-0.5 bg-white block transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                            <span className={`w-5 h-0.5 bg-white block transition-all ${mobileMenuOpen ? 'opacity-0' : ''}`} />
+                            <span className={`w-5 h-0.5 bg-white block transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+                        </div>
                     </button>
                 </div>
+            </nav>
 
-                {/* Mobile Toggle */}
-                <button
-                    className="lg:hidden text-white"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {mobileMenuOpen ? (
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        ) : (
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        )}
-                    </svg>
-                </button>
-            </div>
-
-            {/* Mobile Menu */}
-            {mobileMenuOpen && (
-                <div className="lg:hidden fixed inset-0 top-[60px] bg-black z-40 p-10 flex flex-col gap-6 animate-in slide-in-from-right duration-500">
-                    {NAV_ITEMS.map((item) => (
+            {/* Full Screen Mobile Menu */}
+            <div
+                className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-all duration-500 flex items-center justify-center ${mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+                    }`}
+            >
+                <div className="flex flex-col gap-8 text-center">
+                    {NAV_ITEMS.map((item, idx) => (
                         <button
                             key={item.href}
                             onClick={() => scrollToSection(item.href)}
-                            className={`text-2xl font-black uppercase tracking-tighter border-b border-white/5 pb-4 text-left ${activeSection === item.href ? 'text-white' : 'text-neutral-800'
-                                }`}
+                            className="text-3xl md:text-5xl font-light text-white/80 hover:text-white transition-all transform hover:scale-105"
+                            style={{ transitionDelay: `${idx * 50}ms` }}
                         >
                             {item.label}
                         </button>
                     ))}
                 </div>
-            )}
-        </nav>
+            </div>
+        </>
     );
 };
 

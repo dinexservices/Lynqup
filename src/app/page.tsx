@@ -1,36 +1,33 @@
-
 "use client";
 
-import React from 'react';
+import Home from "@/components/Home";
+import About from "@/components/About";
+import Collaborations from "@/components/Collaborations";
+import Partnership from "@/components/Partnership";
+import PastEditions from "@/components/PastEditions";
+import Contact from "@/components/Contact";
+import IPS from "@/components/IPS";
+import SpeakersSection from "@/components/SpeakersSection";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Home from '@/components/Home';
-import About from '@/components/About';
-import IPs from '@/components/IPS';
-import Partnership from '@/components/Partnership';
-import PastEditions from '@/components/PastEditions';
-import Collaborations from '@/components/Collaborations';
-import Contact from '@/components/Contact';
-
-const App: React.FC = () => {
+export default function Page() {
   return (
-
-    <div className="min-h-screen flex flex-col selection:bg-white selection:text-black scroll-smooth">
-
-      <main className="flex-grow">
+    <div className="bg-black min-h-screen text-white text-base">
+    
+      <main>
         <Home />
+       
+        <SpeakersSection />
+        {/* Kept existing sections as requested/fallback */}
         <About />
-        <IPs />
-        <Partnership />
-        <PastEditions />
         <Collaborations />
+        <IPS />
+        <PastEditions />
+        <Partnership />
         <Contact />
       </main>
-
+     
     </div>
-
   );
-};
-
-export default App;
+}

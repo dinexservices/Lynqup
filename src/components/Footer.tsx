@@ -19,61 +19,76 @@ const Footer: React.FC = () => {
     };
 
     return (
-        <footer className="bg-[#0a0a0a] border-t border-white/5 pt-32 pb-12">
-            <div className="max-w-[1800px] mx-auto px-8 md:px-12 lg:px-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
-                    <div className="space-y-6">
+        <footer className="bg-[#050505] border-t border-white/5 pt-32 pb-12 text-sm">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-12 lg:px-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 mb-24">
+                    {/* Brand Column */}
+                    <div className="space-y-8">
                         <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 group">
-                            <div className="w-10 h-10 bg-white rounded-sm flex items-center justify-center group-hover:rotate-12 transition-all duration-500">
-                                <span className="text-black font-black text-2xl italic">L</span>
+                            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center group-hover:rotate-12 transition-all duration-500 shadow-lg shadow-white/10">
+                                <span className="text-black font-bold text-2xl italic">L</span>
                             </div>
-                            <span className="text-3xl font-black tracking-tighter uppercase">Lynqup</span>
+                            <span className="text-2xl font-bold tracking-tight text-white uppercase group-hover:text-neutral-300 transition-colors">Lynqup</span>
                         </button>
-                        <p className="text-neutral-600 text-base font-light leading-relaxed max-w-xs">
+                        <p className="text-neutral-500 font-light leading-relaxed max-w-xs">
                             Building the future of campus culture through high-impact music and innovation IPs.
                         </p>
                     </div>
 
+                    {/* Links Columns */}
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-600">Explore</h4>
-                        <div className="flex flex-col items-start gap-4">
-                            <button onClick={() => scrollToSection('about')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">About</button>
-                            <button onClick={() => scrollToSection('ips')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">Portfolio</button>
-                            <button onClick={() => scrollToSection('partnership')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">Model</button>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Explore</h4>
+                        <div className="flex flex-col items-start gap-3">
+                            {['About', 'Portfolio', 'Model'].map((item) => (
+                                <button
+                                    key={item}
+                                    onClick={() => scrollToSection(item.toLowerCase() === 'portfolio' ? 'ips' : item.toLowerCase())}
+                                    className="text-neutral-500 hover:text-orange-500 transition-colors font-medium hover:translate-x-1 duration-300"
+                                >
+                                    {item}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-600">Track</h4>
-                        <div className="flex flex-col items-start gap-4">
-                            <button onClick={() => scrollToSection('editions')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">Record</button>
-                            <button onClick={() => scrollToSection('collaborations')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">Partners</button>
-                            <button onClick={() => scrollToSection('contact')} className="text-base text-neutral-500 hover:text-white transition-colors uppercase tracking-tight font-medium">Host</button>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Track</h4>
+                        <div className="flex flex-col items-start gap-3">
+                            <button onClick={() => scrollToSection('editions')} className="text-neutral-500 hover:text-orange-500 transition-colors font-medium hover:translate-x-1 duration-300">Record</button>
+                            <button onClick={() => scrollToSection('collaborations')} className="text-neutral-500 hover:text-orange-500 transition-colors font-medium hover:translate-x-1 duration-300">Partners</button>
+                            <button onClick={() => scrollToSection('contact')} className="text-neutral-500 hover:text-orange-500 transition-colors font-medium hover:translate-x-1 duration-300">Host</button>
                         </div>
                     </div>
 
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-600">Institutional</h4>
-                        <div className="flex flex-col items-start gap-4">
-                            <button className="text-base text-neutral-800 hover:text-white transition-colors cursor-not-allowed uppercase tracking-tight">Terms</button>
-                            <button className="text-base text-neutral-800 hover:text-white transition-colors cursor-not-allowed uppercase tracking-tight">Privacy</button>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Legal</h4>
+                        <div className="flex flex-col items-start gap-3">
+                            <button className="text-neutral-600 cursor-not-allowed font-medium">Terms of Service</button>
+                            <button className="text-neutral-600 cursor-not-allowed font-medium">Privacy Policy</button>
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 pt-16 text-center space-y-10">
-                    <p className="text-neutral-700 text-[9px] leading-[2.2] max-w-5xl mx-auto uppercase tracking-[0.3em] font-medium">
-                        Lynqup operates as a premium campus experience and IP-led event organization. All campus executions are subject to institutional approvals and university-specific guidelines.
-                    </p>
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-10 border-t border-white/[0.02]">
-                        <p className="text-neutral-700 text-[9px] font-black uppercase tracking-[0.4em]">
-                            © {new Date().getFullYear()} Lynqup Studio
-                        </p>
-                        <div className="flex gap-12">
-                            <span className="text-[9px] text-neutral-800 uppercase tracking-[0.4em] font-black">v2.5.2</span>
-                            <span className="text-[9px] text-neutral-800 uppercase tracking-[0.4em] font-black">HEADQUARTERS / IN</span>
+                <div className="border-t border-white/5 pt-12">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div className="flex flex-col gap-2">
+                            <p className="text-neutral-600 text-[10px] uppercase tracking-widest font-medium">
+                                © {new Date().getFullYear()} Lynqup . All rights reserved.
+                            </p>
+                        </div>
+
+                        <div className="flex gap-8">
+                            <a href="https://dinestx.com/" target="_blank" rel="noopener noreferrer">
+                            <span className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold hover:text-orange-500 transition-colors cursor-pointer">
+                                Developed by Dinex Services
+                            </span>
+                            </a>
+                        
                         </div>
                     </div>
+                    <p className="mt-8 text-neutral-800 text-[9px] leading-relaxed max-w-4xl uppercase tracking-wider font-medium text-center md:text-left">
+                        Lynqup operates as a premium campus experience and IP-led event organization. All campus executions are subject to institutional approvals.
+                    </p>
                 </div>
             </div>
         </footer>
